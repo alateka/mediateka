@@ -1,0 +1,18 @@
+[package]
+name = "mediateka"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+panic = 'abort'
+
+[dependencies]
+gio = "0.20.9"
+
+[dependencies.adw]
+package = "libadwaita"
+version = "0.7.1"
+
+[dependencies.gtk]
+package = "gtk4"
+version = "0.9.6"

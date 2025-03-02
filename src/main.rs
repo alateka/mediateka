@@ -7,14 +7,13 @@ pub mod tools;
 use adw::{Application, ApplicationWindow};
 use app::MediaTekaApp;
 use gio::{glib, prelude::{ApplicationExt, ApplicationExtManual}};
-use gtk::{prelude::GtkWindowExt, License};
+use gtk::prelude::GtkWindowExt;
 
-const APP_ID: &str = "es.alateka.mediateka";
-const PROGRAM_NAME: &str = "MediaTeka";
-const VERSION: &str = "0.0.1-alpha";
-const WEBSITE: &str = "https://alateka.es";
-const AUTHORS: [&str; 1] = ["ALATEKA"];
-const LICENSE: License = License::Gpl30Only;
+const APP_ID: &str         = "es.alateka.mediateka";
+const PROGRAM_NAME: &str   = "MediaTeka";
+const VERSION: &str        = "0.0.1-alpha";
+const WEBSITE: &str        = "https://alateka.es";
+const AUTHORS: [&str; 1]   = ["ALATEKA"];
 
 fn main() -> glib::ExitCode {
 

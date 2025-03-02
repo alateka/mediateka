@@ -8,6 +8,7 @@ panic = 'abort'
 
 [dependencies]
 gio = "0.20.9"
+diesel = { version = "2.2.7", features = ["sqlite", "returning_clauses_for_sqlite_3_35"] }
 
 [dependencies.adw]
 package = "libadwaita"

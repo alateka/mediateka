@@ -1,9 +1,10 @@
 
 use adw::Window;
-use gtk::{prelude::{ButtonExt, DialogExt, WidgetExt, FileChooserExt, FileExt, GtkWindowExt}, Button, FileChooserAction, FileChooserDialog, ResponseType};
-use std::fs::read_dir;
+use gtk::{prelude::{ButtonExt, DialogExt, WidgetExt, GtkWindowExt}, Button, FileChooserAction, FileChooserDialog, ResponseType};
+use crate::tools::db::{models::Music, run, schema::music::dsl::*};
+use diesel::prelude::*;
 
-use crate::tools::{fs::FileIO, i18n::en::get_en};
+use crate::tools::i18n::en::get_en;
 
 pub struct GetPathButton<'a> {
     button_text: &'a str
@@ -35,22 +36,15 @@ impl<'a> GetPathButton<'a> {
             dialog.connect_response(move |dialog, response| {
                 if response == ResponseType::Accept {
 
-                    // If the folder is selected, then it will save its paths
-                    if let Some(file) = dialog.file() {
-                        
-                        let paths = read_dir(
-                            file.path().unwrap()
-                        ).unwrap();
-
-                        let file_io: FileIO = FileIO::new("db.csv");
-                        let mut content: String = String::from("");
-
-                        for path in paths {
-                            content += path.unwrap().path().to_str().expect("Failed to get string representation of Path");
-                            content += ";";
-                        }
-                        
-                        let _ = file_io.write(content);
+                    let connection: &mut SqliteConnection = &mut run::connect();
+                    let results = music
+                        .select(Music::as_select())
+                        .load(connection)
+                        .expect("Error loading music");
+                
+                    println!("Displaying {} posts", results.len());
+                    for item in results {
+                        println!("{}", item.title);
                     }
                 }
                 dialog.close();

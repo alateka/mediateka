@@ -1,8 +1,8 @@
-use gtk::{Button, Image, AboutDialog};
+use gtk::{Button, Image, AboutDialog, License};
 use gio::glib;
 use adw::{prelude::{ButtonExt, GtkWindowExt}, ApplicationWindow};
 
-use crate::{AUTHORS, LICENSE, PROGRAM_NAME, VERSION, WEBSITE};
+use crate::{AUTHORS, PROGRAM_NAME, VERSION, WEBSITE};
 
 
 pub fn build_about() -> Button {
@@ -24,7 +24,7 @@ pub fn build_about() -> Button {
                 .program_name(PROGRAM_NAME)
                 .version(VERSION)
                 .website(WEBSITE)
-                .license_type(LICENSE)
+                .license_type(License::Gpl30)
                 .authors(AUTHORS)
                 .build();
 
@@ -33,4 +33,4 @@ pub fn build_about() -> Button {
     ));
     return about_button;
 }
-  
+

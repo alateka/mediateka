@@ -9,3 +9,10 @@ pub struct Music {
     pub title: String,
     pub path: String
 }
+
+#[derive(Insertable)]
+#[diesel(table_name = schema::music)]
+pub struct NewMusic<'a> {
+    pub title: &'a str,
+    pub path: &'a str,
+}

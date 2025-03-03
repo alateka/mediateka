@@ -4,7 +4,9 @@ pub mod header {
 }
 
 pub mod base {
-    pub mod get_path_button;
+    pub mod buttons {
+        pub mod folder_add_button;
+    }
 }
 
 pub mod home {

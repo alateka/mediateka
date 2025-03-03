@@ -13,7 +13,7 @@ diesel::table! {
         id -> Integer,
         title -> Text,
         path -> Text,
-        artist -> Nullable<Text>,
+        artist -> Text,
     }
 }
 

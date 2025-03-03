@@ -1,6 +1,6 @@
 use gtk::{Box, Label, Notebook, Orientation};
 
-use crate::{tools::i18n::en::get_en, ui::base::get_path_button::GetPathButton};
+use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::GetPathButton};
 
 use super::tabs::music::container::MusicTab;
 
@@ -23,7 +23,8 @@ impl HomeContent {
 
         // Build button to check music folder
         let music_check_button: GetPathButton = GetPathButton::new(
-            get_en().check_music_folder
+            get_en().check_music_folder,
+            TableType::Music
         );
 
         // Build music tab

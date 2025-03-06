@@ -3,7 +3,7 @@ use diesel::prelude::*;
 use crate::tools::db::models::NewMusic;
 use crate::tools::db::schema::music;
 
-use super::models::Music;
+use super::{models::{Image, Music, NewImage, NewVideo, Video}, schema::{image, video}};
 
 pub struct DB<'a> {
     path: &'a str
@@ -28,5 +28,27 @@ impl<'a> DB<'a> {
             .returning(Music::as_returning())
             .get_result(&mut self.connect())
             .expect("Error saving new music");
+    }
+
+    pub fn create_video(&mut self, title: &str, path: &str) {
+    
+        let new_video: NewVideo<'_> = NewVideo { title, path };
+    
+        diesel::insert_into(video::table)
+            .values(&new_video)
+            .returning(Video::as_returning())
+            .get_result(&mut self.connect())
+            .expect("Error saving new video");
+    }
+
+    pub fn create_image(&mut self, title: &str, path: &str) {
+    
+        let new_image: NewImage<'_> = NewImage { title, path };
+    
+        diesel::insert_into(image::table)
+            .values(&new_image)
+            .returning(Image::as_returning())
+            .get_result(&mut self.connect())
+            .expect("Error saving new image");
     }
 }

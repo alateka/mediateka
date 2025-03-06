@@ -6,6 +6,8 @@ pub fn get_en() -> I18n<'static> {
         video:              "Video",
         image:              "Image",
         check_music_folder: "Check music folder",
+        check_video_folder: "Check video folder",
+        check_image_folder: "Check image folder",
         choose_a_folder:    "Choose a folder",
         open:               "Open",
         cancel:             "Cancel",

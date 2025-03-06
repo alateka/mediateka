@@ -38,4 +38,18 @@ pub struct NewMusic<'a> {
     pub path: &'a str,
     pub artist: &'a str
 }
+
+#[derive(Insertable)]
+#[diesel(table_name = schema::image)]
+pub struct NewImage<'a> {
+    pub title: &'a str,
+    pub path: &'a str
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = schema::video)]
+pub struct NewVideo<'a> {
+    pub title: &'a str,
+    pub path: &'a str
+}
 // ================( Insertable )===================================

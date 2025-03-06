@@ -1,6 +1,6 @@
-use gtk::{Box, Label, Notebook, Orientation};
+use gtk::{Box, Button, Label, Notebook, Orientation};
 
-use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::GetPathButton};
+use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::build};
 
 use super::tabs::music::container::MusicTab;
 
@@ -22,7 +22,7 @@ impl HomeContent {
         let home_content: Notebook = Notebook::new();
 
         // Build button to check music folder
-        let music_check_button: GetPathButton = GetPathButton::new(
+        let music_check_button: Button = build(
             get_en().check_music_folder,
             TableType::Music
         );
@@ -30,13 +30,37 @@ impl HomeContent {
         // Build music tab
         let music_tab: MusicTab = MusicTab::new(
             Box::new(Orientation::Vertical, 7),
-            music_check_button.build()
+            music_check_button
+        );
+
+        // Build button to check video folder
+        let video_check_button: Button = build(
+            get_en().check_video_folder,
+            TableType::Video
+        );
+
+        // Build video tab
+        let video_tab: MusicTab = MusicTab::new(
+            Box::new(Orientation::Vertical, 7),
+            video_check_button
+        );
+
+        // Build button to check image folder
+        let image_check_button: Button = build(
+            get_en().check_image_folder,
+            TableType::Image
+        );
+
+        // Build image tab
+        let image_tab: MusicTab = MusicTab::new(
+            Box::new(Orientation::Vertical, 7),
+            image_check_button
         );
 
         // Prepare tabs
         home_content.append_page(&music_tab.build(), Some(&self.music_label));
-        home_content.append_page(&Label::new(Some("Hola")), Some(&self.video_label));
-        home_content.append_page(&Label::new(Some("Adios")), Some(&self.image_label));
+        home_content.append_page(&video_tab.build(), Some(&self.video_label));
+        home_content.append_page(&image_tab.build(), Some(&self.image_label));
 
 
         home_content

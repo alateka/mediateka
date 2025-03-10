@@ -51,4 +51,18 @@ impl<'a> DB<'a> {
             .get_result(&mut self.connect())
             .expect("Error saving new image");
     }
+
+    pub fn get_music(&mut self) {
+    
+        let music = music::dsl::music
+        .select(Music::as_select())
+        .first(&mut self.connect())
+        .optional(); // This allows for returning an Option<Post>, otherwise it will throw an error
+
+        match music {
+            Ok(Some(music)) => println!("Music with id: {} has a title: {}", music.id, music.title),
+            Ok(None) => println!("Unable to find music"),
+            Err(_) => println!("An error occured while fetching music"),
+        }
+    }
 }

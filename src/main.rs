@@ -13,10 +13,11 @@ const APP_ID: &str         = "es.alateka.mediateka";
 const PROGRAM_NAME: &str   = "MediaTeka";
 const VERSION: &str        = "0.0.1-alpha";
 const WEBSITE: &str        = "https://alateka.es";
+const DATABASE: &str       = "mediateka.db";
 const AUTHORS: [&str; 1]   = ["ALATEKA"];
 
 fn main() -> glib::ExitCode {
-
+    
     // Start application
     let app = Application::builder()
     .application_id(APP_ID)
@@ -32,12 +33,12 @@ fn main() -> glib::ExitCode {
 
         // Build main window
         let main_window: ApplicationWindow = ApplicationWindow::builder()
-        .application(app)
-        .title(mediateka.title)
-        .default_width(900)
-        .default_height(700)
-        .content(&mediateka.build())
-        .build();
+            .application(app)
+            .title(mediateka.title)
+            .default_width(900)
+            .default_height(700)
+            .content(&mediateka.build())
+            .build();
 
         // Show main window
         main_window.present();

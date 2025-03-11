@@ -3,7 +3,7 @@ use diesel::prelude::*;
 use crate::tools::db::models::NewMusic;
 use crate::tools::db::schema::music;
 
-use super::{models::{Image, Music, NewImage, NewVideo, Video}, schema::{image, video}};
+use super::{models::{self, Image, Music, NewImage, NewVideo, Video}, schema::{image, video}};
 
 pub struct DB<'a> {
     path: &'a str
@@ -52,17 +52,30 @@ impl<'a> DB<'a> {
             .expect("Error saving new image");
     }
 
-    pub fn get_music(&mut self) {
+    pub fn get_music(&mut self) -> Vec<models::Music> {
     
-        let music = music::dsl::music
-        .select(Music::as_select())
-        .first(&mut self.connect())
-        .optional(); // This allows for returning an Option<Post>, otherwise it will throw an error
+        let results: Vec<Music> = music::table.load(
+            &mut self.connect()
+        ).expect("Error loading items");
 
-        match music {
-            Ok(Some(music)) => println!("Music with id: {} has a title: {}", music.id, music.title),
-            Ok(None) => println!("Unable to find music"),
-            Err(_) => println!("An error occured while fetching music"),
-        }
+        results
+    }
+
+    pub fn get_video(&mut self) -> Vec<models::Video> {
+    
+        let results: Vec<Video> = video::table.load(
+            &mut self.connect()
+        ).expect("Error loading items");
+
+        results
+    }
+
+    pub fn get_image(&mut self) -> Vec<models::Image> {
+    
+        let results: Vec<Image> = image::table.load(
+            &mut self.connect()
+        ).expect("Error loading items");
+
+        results
     }
 }

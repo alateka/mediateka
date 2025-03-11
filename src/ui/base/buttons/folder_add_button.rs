@@ -1,5 +1,6 @@
 use crate::tools::{db::run::DB, enums::table::TableType};
 use crate::tools::i18n::en::get_en;
+use crate::DATABASE;
 
 use adw::Window;
 use gtk::{prelude::{DialogExt, WidgetExt, GtkWindowExt}, Button, FileChooserAction, FileChooserDialog, ResponseType};
@@ -30,7 +31,7 @@ fn click(table_type: TableType) {
     dialog.connect_response(move |dialog, response| {
         if response == ResponseType::Accept {
 
-            let mut db: DB = DB::new("mediateka.db");
+            let mut db: DB = DB::new(DATABASE);
 
             // If the folder is selected, then it will save its paths
             if let Some(file) = dialog.file() {

@@ -2,7 +2,7 @@ use gtk::{Box, Button, Label, Notebook, Orientation};
 
 use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::build};
 
-use super::tabs::music::container::MusicTab;
+use super::tabs::{image::image_container::ImageTab, music::music_container::MusicTab, video::video_container::VideoTab};
 
 pub struct HomeContent {
     music_label: Label,
@@ -17,9 +17,11 @@ impl HomeContent {
     }
     
     pub fn build(self) -> Notebook {
-
+        
         // Build items content 
-        let home_content: Notebook = Notebook::new();
+        let home_content: Notebook = Notebook::builder()
+            .tab_pos(gtk::PositionType::Top)
+            .build();
 
         // Build button to check music folder
         let music_check_button: Button = build(
@@ -40,7 +42,7 @@ impl HomeContent {
         );
 
         // Build video tab
-        let video_tab: MusicTab = MusicTab::new(
+        let video_tab: VideoTab = VideoTab::new(
             Box::new(Orientation::Vertical, 7),
             video_check_button
         );
@@ -52,7 +54,7 @@ impl HomeContent {
         );
 
         // Build image tab
-        let image_tab: MusicTab = MusicTab::new(
+        let image_tab: ImageTab = ImageTab::new(
             Box::new(Orientation::Vertical, 7),
             image_check_button
         );

@@ -1,7 +1,7 @@
 use adw::{prelude::ActionRowExt, ActionRow};
-use gtk::{prelude::BoxExt, Box, Button, ListBox, SelectionMode};
+use gtk::{prelude::BoxExt, Box, Button, ListBox, PolicyType, ScrolledWindow};
 
-use crate::{tools::db::run::DB, DATABASE};
+use crate::{tools::{base_functions::item_manager::create_list, db::{models, run::DB}}, DATABASE};
 
 pub struct ImageTab {
     pub base_content: Box,
@@ -15,27 +15,18 @@ impl ImageTab {
         Self { base_content, image_check_button }
     }
     
-    pub fn build(self) -> Box {
+    pub fn build(self) -> ScrolledWindow {
         
-        // Prepare base content to show all music on the tab
-        self.base_content.set_spacing(45);
+        // Get all music saved on disk
+        let results: Vec<models::Image> = DB::new(DATABASE).get_image();
 
         // Append the folder select button
-        self.base_content.append(&self.image_check_button);
+        if results.len() == 0 {
+            self.base_content.append(&self.image_check_button);
+        }
 
         // Build a list to add items
-        let list: ListBox = ListBox::builder()
-            .margin_top(15)
-            .margin_end(15)
-            .margin_bottom(15)
-            .margin_start(15)
-            .selection_mode(SelectionMode::None)
-            .css_classes(vec![String::from("boxed-list")])
-            .build();
-
-        // Get all music saved on disk
-        let results = DB::new(DATABASE).get_image();
-
+        let list: ListBox = create_list();
 
         // Add the items (Music)
         for item in results {
@@ -54,6 +45,9 @@ impl ImageTab {
 
         self.base_content.append(&list);
 
-        self.base_content
+        ScrolledWindow::builder()
+            .hscrollbar_policy(PolicyType::Automatic)
+            .child(&self.base_content)
+            .build()
     }
 }

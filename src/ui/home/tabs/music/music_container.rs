@@ -1,5 +1,5 @@
 use adw::{prelude::ActionRowExt, ActionRow};
-use gtk::{prelude::BoxExt, Box, Button, ListBox};
+use gtk::{prelude::BoxExt, Box, Button, ListBox, PolicyType, ScrolledWindow};
 
 use crate::{tools::{base_functions::item_manager::create_list, db::{models, run::DB}}, DATABASE};
 
@@ -14,13 +14,10 @@ impl MusicTab {
         Self { base_content, music_check_button }
     }
     
-    pub fn build(self) -> Box {
+    pub fn build(self) -> ScrolledWindow {
         
         // Get all music saved on disk
         let results: Vec<models::Music> = DB::new(DATABASE).get_music();
-
-        // Prepare base content to show all music on the tab
-        self.base_content.set_spacing(45);
 
         // Append the folder select button
         if results.len() == 0 {
@@ -47,6 +44,9 @@ impl MusicTab {
 
         self.base_content.append(&list);
 
-        self.base_content
+        ScrolledWindow::builder()
+            .hscrollbar_policy(PolicyType::Automatic)
+            .child(&self.base_content)
+            .build()
     }
 }

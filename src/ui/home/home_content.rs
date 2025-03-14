@@ -1,4 +1,4 @@
-use gtk::{Box, Button, Label, Notebook, Orientation};
+use gtk::{prelude::WidgetExt, Box, Button, Label, Notebook, Orientation};
 
 use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::build};
 
@@ -31,7 +31,9 @@ impl HomeContent {
 
         // Build music tab
         let music_tab: MusicTab = MusicTab::new(
-            Box::new(Orientation::Vertical, 7),
+            Box::builder()
+                .orientation(Orientation::Vertical)
+                .build(),
             music_check_button
         );
 
@@ -43,7 +45,9 @@ impl HomeContent {
 
         // Build video tab
         let video_tab: VideoTab = VideoTab::new(
-            Box::new(Orientation::Vertical, 7),
+            Box::builder()
+                .orientation(Orientation::Vertical)
+                .build(),
             video_check_button
         );
 
@@ -55,9 +59,15 @@ impl HomeContent {
 
         // Build image tab
         let image_tab: ImageTab = ImageTab::new(
-            Box::new(Orientation::Vertical, 7),
+            Box::builder()
+                .orientation(Orientation::Vertical)
+                .build(),
             image_check_button
         );
+
+        // Expand content on the window
+        home_content.set_vexpand(true);
+        home_content.set_hexpand(true);
 
         // Prepare tabs
         home_content.append_page(&music_tab.build(), Some(&self.music_label));

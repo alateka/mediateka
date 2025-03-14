@@ -15,7 +15,9 @@ impl<'a> MediaTekaApp<'a> {
     pub fn build(&self) -> Box {
 
         // Create the box to append main items
-        let main_box: Box = Box::new(Orientation::Vertical, 7);
+        let main_box: Box = Box::builder()
+            .orientation(Orientation::Vertical)
+            .build();
 
         // Create the app header
         let header_app: HeaderApp = HeaderApp::new(build_about());

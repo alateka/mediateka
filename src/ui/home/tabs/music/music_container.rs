@@ -1,5 +1,6 @@
 use adw::{prelude::ActionRowExt, ActionRow};
 use gtk::{prelude::BoxExt, Box, Button, ListBox, PolicyType, ScrolledWindow};
+use std::rc::Rc;
 
 use crate::{tools::{base_functions::item_manager::create_list, db::{models, run::DB}}, DATABASE};
 
@@ -12,6 +13,24 @@ impl MusicTab {
 
     pub fn new(base_content: Box, music_check_button: Button) -> Self {
         Self { base_content, music_check_button }
+    }
+    
+    fn create_rows(item: models::Music) -> ActionRow {
+        // Add item to Rc
+        let item_rc = Rc::new(item);
+    
+        // Create row with click action
+        let row = ActionRow::builder()
+            .activatable(true)
+            .title(item_rc.title.clone())
+            .build();
+    
+        let item_clone = Rc::clone(&item_rc);
+        row.connect_activated( move |_| {
+            eprintln!("Path: {:?}", item_clone.path);
+        });
+    
+        row
     }
     
     pub fn build(self) -> ScrolledWindow {
@@ -29,17 +48,7 @@ impl MusicTab {
 
         // Add the items (Music)
         for item in results {
-
-            let row = ActionRow::builder()
-                .activatable(true)
-                .title(item.title)
-                .build();
-
-            row.connect_activated(|_| {
-                eprintln!("Clicked");
-            });
-
-            list.append(&row)
+            list.append(&Self::create_rows(item))
         }
 
         self.base_content.append(&list);

@@ -1,4 +1,4 @@
-use gtk::{prelude::WidgetExt, Box, Button, Label, Notebook, Orientation};
+use gtk::{prelude::WidgetExt, Box, Button, Label, Notebook, Orientation, PositionType};
 
 use crate::{tools::{enums::table::TableType, i18n::en::get_en}, ui::base::buttons::folder_add_button::build};
 
@@ -20,7 +20,7 @@ impl HomeContent {
         
         // Build items content 
         let home_content: Notebook = Notebook::builder()
-            .tab_pos(gtk::PositionType::Top)
+            .tab_pos(PositionType::Left)
             .build();
 
         // Build button to check music folder

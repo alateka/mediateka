@@ -1,4 +1,4 @@
-### A media player made with GTK4 Adwaita
+### A media player made with Rust and GTK4 library (Adwaita)
 
 > [!CAUTION]
 > Project is down.
